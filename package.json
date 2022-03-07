@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/laurawalters1/new-note-taker/issues"
   },
-  "homepage": "https://github.com/laurawalters1/new-note-taker#readme"
+  "homepage": "https://github.com/laurawalters1/new-note-taker#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }
