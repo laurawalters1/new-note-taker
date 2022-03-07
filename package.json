@@ -1,0 +1,19 @@
+{
+  "name": "new-note-taker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurawalters1/new-note-taker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laurawalters1/new-note-taker/issues"
+  },
+  "homepage": "https://github.com/laurawalters1/new-note-taker#readme"
+}
