@@ -5,10 +5,11 @@ const router = express.Router();
 const path = require("path");
 const PORT = process.env.PORT || 3001;
 const fs = require("fs");
+const { json } = require("express/lib/response");
 
 const writeToFile = (destination, content) =>
   fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
-    err ? console.error(err) : console.info(`\nData written to ${destination}`)
+    err ? console.error(err) : console.info(`\nData saved to ${destination}`)
   );
 
 const readAndAppend = (content, file) => {
@@ -40,8 +41,14 @@ app.post("/api/notes", function (req, res) {
   readAndAppend(req.body, "db/db.json");
 });
 
-app.get("api/notes", function (req, res) {
-  fs.readFile("db/db.json");
+app.get("/api/notes", function (req, res) {
+  fs.readFile("db/db.json", "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.send(data);
+    }
+  });
 });
 
 app.get("/*", function (req, res) {
