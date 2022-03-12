@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3001;
 const fs = require("fs");
 const { json } = require("express/lib/response");
 const { randomUUID } = require("crypto");
+const res = require("express/lib/response");
 
 // Function to write any data to a JSON file by first stringifying it
 const writeToFile = (destination, content) =>
@@ -35,6 +36,7 @@ const readAndDelete = (id, file) => {
       console.error(err);
     } else {
       const parsedData = JSON.parse(data);
+
       writeToFile(
         file,
         parsedData.filter((item) => item.id != id)
@@ -59,8 +61,8 @@ app.get("/notes", function (req, res) {
 // Post request handler for when the user adds a new note
 app.post("/api/notes", function (req, res) {
   req.body["id"] = randomUUID();
-
   readAndAppend(req.body, "db/db.json");
+  res.send("db/db.json");
 });
 
 // Get request handler to render the existing notes in the database when the user loads the notes page
@@ -82,7 +84,7 @@ app.get("/*", function (req, res) {
 // Delete request handler, will delete a chose note
 app.delete("/api/notes/:id", function (req, res) {
   readAndDelete(req.params.id, "db/db.json");
-  console.log(req.params.id);
+  res.send("db/db.json");
 });
 
 app.listen(PORT, () => {
