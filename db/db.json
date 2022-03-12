@@ -1,18 +1,12 @@
 [
     {
-        "title": "Test Title",
-        "text": "Test text"
+        "title": "New note 5",
+        "text": "another new note",
+        "id": "4f984925-84c2-417e-a6be-65540d2f4349"
     },
     {
-        "title": "Laura",
-        "text": "new note"
-    },
-    {
-        "title": "Laura",
-        "text": "new note 2"
-    },
-    {
-        "title": "njnrwj;n",
-        "text": "ejg ehjg"
+        "title": "This is a new note",
+        "text": "This is the text",
+        "id": "b14590d4-ed8f-48bd-883e-350a0601e397"
     }
 ]
