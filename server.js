@@ -9,11 +9,13 @@ const fs = require("fs");
 const { json } = require("express/lib/response");
 const { randomUUID } = require("crypto");
 
+// Function to write any data to a JSON file by first stringifying it
 const writeToFile = (destination, content) =>
   fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
     err ? console.error(err) : console.info(`\nData saved to ${destination}`)
   );
 
+// Function to read a file and append new data to it
 const readAndAppend = (content, file) => {
   fs.readFile(file, "utf8", (err, data) => {
     if (err) {
@@ -22,6 +24,21 @@ const readAndAppend = (content, file) => {
       const parsedData = JSON.parse(data);
       parsedData.push(content);
       writeToFile(file, parsedData);
+    }
+  });
+};
+
+// Function to read a file and delete specified data from it
+const readAndDelete = (id, file) => {
+  fs.readFile(file, "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      const parsedData = JSON.parse(data);
+      writeToFile(
+        file,
+        parsedData.filter((item) => item.id != id)
+      );
     }
   });
 };
@@ -41,9 +58,8 @@ app.get("/notes", function (req, res) {
 
 // Post request handler for when the user adds a new note
 app.post("/api/notes", function (req, res) {
-  console.log(req);
   req.body["id"] = randomUUID();
-  console.log(req.body);
+
   readAndAppend(req.body, "db/db.json");
 });
 
@@ -61,6 +77,12 @@ app.get("/api/notes", function (req, res) {
 // Wildcard request handler, so that if the user types in any query strings that aren't handled, they will be returned to the index
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "/public/index.html"));
+});
+
+// Delete request handler, will delete a chose note
+app.delete("/api/notes/:id", function (req, res) {
+  readAndDelete(req.params.id, "db/db.json");
+  console.log(req.params.id);
 });
 
 app.listen(PORT, () => {
